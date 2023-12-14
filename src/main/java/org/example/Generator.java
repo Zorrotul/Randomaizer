@@ -1,12 +1,9 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Generator {
-    public static HashMap<String, String> generateMap(Set<String> list) {
+    public static HashMap<String, String> generateShuffledList(Set<String> list) {
         HashMap map = new HashMap<String, String>();
         int value;
         List<String> temporaryList = new ArrayList<>();
@@ -15,7 +12,7 @@ public class Generator {
             String currentElement = i;
             temporaryList.remove(i);
             if (temporaryList.isEmpty()) {
-                value = RandomIntGenerator.generateRandomInt(temporaryList.size())-1;
+                value = RandomIntGenerator.generateRandomInt(temporaryList.size()) - 1;
                 map.put(i, map.get(value));
                 map.put(value, i);
             } else {
@@ -31,5 +28,28 @@ public class Generator {
         return map;
     }
 
+    public static String[] generateShuffledListVer2(List<String> list) {
 
+        String[] finalList = new String[list.size()];
+
+        List<String> temporaryList = new ArrayList<>();
+        temporaryList.addAll(list);
+        int randomizedIndex;
+        String value;
+        //String firstElement = list.get(0);
+        int currentIndex = 0;
+
+        for (int i = 0; i < list.size()-1; i++) {
+            value = list.get(currentIndex);
+            temporaryList.remove(value);
+            randomizedIndex = RandomIntGenerator.generateRandomInt(temporaryList.size());
+            currentIndex = list.indexOf(temporaryList.get(randomizedIndex));
+            System.out.println(value + " получает подарок под номером " + (int)(currentIndex+1));
+            finalList[currentIndex]= value;
+        }
+        finalList[0] =list.get(currentIndex);
+        System.out.println(list.get(currentIndex) + " получает подарок под номером " + (int)(0+1));
+
+        return finalList;
+    }
 }
